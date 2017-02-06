@@ -76,20 +76,6 @@ class Deploy:
 			'--optimize-autoloader'
 		], cwd=deploy_path);
 
-	def packages(self, deploy_path):
-		if os.path.exists(deploy_path + '/package.json') == False:
-			return None
-
-		self.console.success('Installing npm dependencies')
-		self.console.run(['npm', 'install', '--silent', '--production'], cwd=deploy_path);
-
-	def gulp(self, deploy_path):
-		if os.path.exists(deploy_path + '/gulpfile.js') == False:
-			return None
-
-		self.console.success('Running gulp')
-		self.console.run(['node', 'node_modules/.bin/gulp'], cwd=deploy_path);
-
 	def scripts(self, scripts_to_run, deploy_path):
 		if self.config.has(scripts_to_run) == False:
 			return
@@ -124,8 +110,6 @@ class Deploy:
 
 		# fetch resources
 		self.composer(deploy_path)
-		self.packages(deploy_path)
-		self.gulp(deploy_path)
 
 		# static resources
 		if self.config.has('static_path'):
