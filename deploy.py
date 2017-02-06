@@ -22,7 +22,8 @@ class Deploy:
 		self.console.run(['chown', '-R', user, path])
 
 	def linkdir(self, src, dst):
-		self.console.run(['unlink', dst])
+		if os.path.exists(dst) == True:
+			self.console.run(['unlink', dst])
 		self.console.run(['ln', '-s', src, dst])
 
 	def version(self, deploy_path):
