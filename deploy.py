@@ -49,6 +49,7 @@ class Deploy:
 
 		self.console.success('Fetching files')
 		self.console.run([
+			'GIT_SSH_COMMAND="ssh -i ' + self.config.get('deploy_key') + '"'
 			'git',
 			'clone',
 			'--quiet',

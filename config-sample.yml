@@ -1,4 +1,5 @@
 repo_url: git@github.com:user/project.git
+deploy_key: ~/.ssh/id_rsa
 static_path: /path/to/static
 release_path: /path/to/release
 symlink: /path/to/current
