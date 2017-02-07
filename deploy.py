@@ -51,7 +51,7 @@ class Deploy:
 		self.console.run([
 			'ssh-agent',
 			'sh',
-			'-c'
+			'-c',
 			'\'ssh-add',
 			self.config.get('deploy_key') + ';',
 			'git',
