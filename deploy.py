@@ -47,9 +47,14 @@ class Deploy:
 		if os.path.exists(deploy_path) == False:
 			os.makedirs(deploy_path, 0755)
 
+		self.console.success('Adding ssh key')
+		self.console.run([
+			'ssh-add',
+			self.config.get('deploy_key')
+		])
+
 		self.console.success('Fetching files')
 		self.console.run([
-			'GIT_SSH_COMMAND="ssh -i ' + self.config.get('deploy_key') + '"'
 			'git',
 			'clone',
 			'--quiet',
