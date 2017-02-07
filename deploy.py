@@ -64,7 +64,7 @@ class Deploy:
 		])
 
 		self.console.success('Fetching files')
-		self.console.run('ssh-agent sh -c \'' + sshadd + '; ' + gitclone + '\'', shell=True)
+		self.console.execute('ssh-agent sh -c \'' + sshadd + '; ' + gitclone + '\'')
 
 		return deploy_path
 

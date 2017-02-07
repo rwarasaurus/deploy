@@ -22,3 +22,7 @@ class Console:
 		if len(stderr):
 			raise RuntimeError(stderr)
 		return stdout
+
+	def execute(self, command):
+		self.message('$ ' + command)
+		subprocess.check_call(command, shell=True)
