@@ -47,13 +47,7 @@ class Deploy:
 		if os.path.exists(deploy_path) == False:
 			os.makedirs(deploy_path, 0755)
 
-		self.console.success('Fetching files')
-		self.console.run([
-			'ssh-agent',
-			'sh',
-			'-c',
-			shlex.quotes("'ssh-add"),
-			self.config.get('deploy_key') + ';',
+		gitclone = ' '.join([
 			'git',
 			'clone',
 			'--quiet',
@@ -61,8 +55,16 @@ class Deploy:
 			'--depth', '1',
 			'--branch', 'master',
 			self.config.get('repo_url'),
-			deploy_path + shlex.quotes("'")
+			deploy_path
 		])
+
+		sshadd = ' '.join([
+			'ssh-add',
+			self.config.get('deploy_key')
+		])
+
+		self.console.success('Fetching files')
+		self.console.run('ssh-agent sh -c \'' + sshadd + '; ' + gitclone + '\'', shell=True)
 
 		return deploy_path
 
