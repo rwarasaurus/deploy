@@ -52,7 +52,7 @@ class Deploy:
 			'ssh-agent',
 			'sh',
 			'-c',
-			"'ssh-add",
+			'ssh-add',
 			self.config.get('deploy_key') + ';',
 			'git',
 			'clone',
@@ -61,7 +61,7 @@ class Deploy:
 			'--depth', '1',
 			'--branch', 'master',
 			self.config.get('repo_url'),
-			deploy_path + "'"
+			deploy_path
 		])
 
 		return deploy_path
