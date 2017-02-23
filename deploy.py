@@ -53,7 +53,7 @@ class Deploy:
 			'--quiet',
 			'--recursive',
 			'--depth', '1',
-			'--branch', 'master',
+			'--branch', self.config.get('repo_branch'),
 			self.config.get('repo_url'),
 			deploy_path
 		])
