@@ -25,4 +25,4 @@ class Console:
 
 	def execute(self, command):
 		self.message('$ ' + command)
-		subprocess.check_call(command, shell=True)
+		return subprocess.check_call(command, shell=True)

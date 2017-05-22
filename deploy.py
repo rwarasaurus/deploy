@@ -22,9 +22,7 @@ class Deploy:
 		self.console.run(['chown', '-R', user, path])
 
 	def linkdir(self, src, dst):
-		if os.path.exists(dst) == True:
-			self.console.run(['unlink', dst])
-		self.console.run(['ln', '-s', src, dst])
+		self.console.run(['ln', '-sfn', src, dst])
 
 	def version(self, deploy_path):
 		hash = self.console.run(['git', 'rev-parse', 'HEAD'], cwd=deploy_path);
