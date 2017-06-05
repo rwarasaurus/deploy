@@ -28,7 +28,14 @@ class Deploy:
 		hash = self.console.run(['git', 'rev-parse', 'HEAD'], cwd=deploy_path);
 		return hash[0:8]
 
+	def hostname(self):
+		hostname = self.console.run(['hostname', '-f'], output=False);
+		return hostname
+
 	def sync(self, src, dst):
+		if os.path.exists(src) == False:
+			os.makedirs(src, 0755)
+
 		self.console.run([
 			'rsync',
 			'--links',
@@ -89,6 +96,9 @@ class Deploy:
 
 		for line in scripts:
 			command = line.replace('$deploy_path', deploy_path)
+			command = command.replace('$repo_branch', self.config.get('repo_branch'))
+			command = command.replace('$repo_url', self.config.get('repo_url'))
+			command = command.replace('$hostname', self.hostname())
 			self.console.run(shlex.split(command), cwd=deploy_path)
 
 	def clean(self):
@@ -121,8 +131,9 @@ class Deploy:
 			self.console.success('Copying static resources')
 			self.sync(self.path('static_path'), deploy_path)
 
-		self.console.success('Running pre-scripts')
-		self.scripts('pre_scripts', deploy_path)
+		if self.config.has('pre_scripts'):
+			self.console.success('Running pre-scripts')
+			self.scripts('pre_scripts', deploy_path)
 
 		self.console.success('Updating file owner')
 		self.chown(deploy_path)
@@ -130,8 +141,9 @@ class Deploy:
 		self.console.success('Updating symlink')
 		self.linkdir(deploy_path, self.config.get('symlink'))
 
-		self.console.success('Running post-scripts')
-		self.scripts('post_scripts', deploy_path)
+		if self.config.has('post_scripts'):
+			self.console.success('Running post-scripts')
+			self.scripts('post_scripts', deploy_path)
 
 		self.console.success('Cleaning up old releases')
 		self.clean()
