@@ -52,6 +52,6 @@ Or if you have symlinked the `run.py` file to `/bin/deployer`
 
 ## Rollback
 
-Rollback back to another release, for example `20171221173000`
+Rollback to another release, for example `20171221173000`
 
     deployer /my/deployments/myproject/config.yml 20171221173000
